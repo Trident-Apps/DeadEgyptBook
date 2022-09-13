@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Dead Egypt Book</string>
+
+    <string name="facebook_app_id">821181595721986</string>
+    <string name="facebook_client_token">3f8d2301376d404d74451cd4a1873ffa</string>
+
+    <string name="secure_get_parametr">fXLU6LIXrP</string>
+    <string name="secure_key">qsS9Fiwdp8</string>
+    <string name="dev_tmz_key">a1wPBl5608</string>
+    <string name="gadid_key">nZDtiyNgV1</string>
+    <string name="deeplink_key">qXDIL3JSch</string>
+    <string name="source_key">6uHxJ6hdkY</string>
+    <string name="af_id_key">pIzoURfTou</string>
+    <string name="adset_id_key">XVn7DMvlzf</string>
+    <string name="campaign_id_key">zGSKiPUmmw</string>
+    <string name="app_campaign_key">nHyv3qQE1N</string>
+    <string name="adset_key">qFbxF3KpXS</string>
+    <string name="adgroup_key">ywHfVWUAaz</string>
+    <string name="orig_cost_key">IVGccKQaIH</string>
+    <string name="af_siteid_key">coPrNzoFta</string>
+
+    <string name="repeat_btn">Try again?</string>
+    <string name="victory">You Won!</string>
+    <string name="game_text">Guess where is Eagle</string>
+
+    <string name="won_color">#28B463</string>
+    <string name="loose_color">#000000</string>
+    <string name="won_text">You Won</string>
+    <string name="loose_text">You loose</string>
+</resources>
