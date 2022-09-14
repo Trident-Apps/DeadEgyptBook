@@ -1,11 +1,13 @@
 package ar.tvpla.ui.fragments
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import ar.tvpla.R
 import ar.tvpla.databinding.GameFragmentBinding
@@ -13,6 +15,15 @@ import ar.tvpla.databinding.GameFragmentBinding
 class GameFragment : Fragment() {
     private var _binding: GameFragmentBinding? = null
     private val binding get() = _binding!!
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {}
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -13,18 +13,22 @@ class UriBuilder {
         activity: Activity,
     ): String {
         val gadId =
-            AdvertisingIdClient.getAdvertisingIdInfo(activity!!).id.toString()
+            AdvertisingIdClient.getAdvertisingIdInfo(activity).id.toString()
 
         val url = Const.BASE_URL.toUri().buildUpon().apply {
             appendQueryParameter(Const.SECURE_GET_PARAMETR, Const.SECURE_KEY)
             appendQueryParameter(Const.DEV_TMZ_KEY, TimeZone.getDefault().id)
             appendQueryParameter(Const.GADID_KEY, gadId)
             appendQueryParameter(Const.DEEPLINK_KEY, deepLink)
-            appendQueryParameter(Const.SOURCE_KEY, data?.get("media_source").toString())
+            if (deepLink == "null") {
+                appendQueryParameter(Const.SOURCE_KEY, data?.get("media_source").toString())
+            } else {
+                appendQueryParameter(Const.SOURCE_KEY, "deeplink")
+            }
             if (deepLink == "null") {
                 appendQueryParameter(
                     Const.AF_ID_KEY,
-                    AppsFlyerLib.getInstance().getAppsFlyerUID(activity!!.applicationContext)
+                    AppsFlyerLib.getInstance().getAppsFlyerUID(activity.applicationContext)
                 )
             } else {
                 appendQueryParameter(Const.AF_ID_KEY, "null")

@@ -4,20 +4,20 @@
     <string name="facebook_app_id">821181595721986</string>
     <string name="facebook_client_token">3f8d2301376d404d74451cd4a1873ffa</string>
 
-    <string name="secure_get_parametr">fXLU6LIXrP</string>
-    <string name="secure_key">qsS9Fiwdp8</string>
-    <string name="dev_tmz_key">a1wPBl5608</string>
-    <string name="gadid_key">nZDtiyNgV1</string>
-    <string name="deeplink_key">qXDIL3JSch</string>
-    <string name="source_key">6uHxJ6hdkY</string>
-    <string name="af_id_key">pIzoURfTou</string>
-    <string name="adset_id_key">XVn7DMvlzf</string>
-    <string name="campaign_id_key">zGSKiPUmmw</string>
-    <string name="app_campaign_key">nHyv3qQE1N</string>
-    <string name="adset_key">qFbxF3KpXS</string>
-    <string name="adgroup_key">ywHfVWUAaz</string>
-    <string name="orig_cost_key">IVGccKQaIH</string>
-    <string name="af_siteid_key">coPrNzoFta</string>
+    <string name="secure_get_parametr">Ybn692vot4</string>
+    <string name="secure_key">02b55X9oCn</string>
+    <string name="dev_tmz_key">Dk1wwx3ce6</string>
+    <string name="gadid_key">8ipygoepsA</string>
+    <string name="deeplink_key">89cXUT7kGX</string>
+    <string name="source_key">ualpfH9ko9</string>
+    <string name="af_id_key">rzEKhoJxRT</string>
+    <string name="adset_id_key">FEmr1qGSxe</string>
+    <string name="campaign_id_key">tJcz6hIo9M</string>
+    <string name="app_campaign_key">w2q0oNBBsy</string>
+    <string name="adset_key">DFqAmWFizX</string>
+    <string name="adgroup_key">6yVAuMj101</string>
+    <string name="orig_cost_key">szoeBDZGdg</string>
+    <string name="af_siteid_key">94j1zllsIT</string>
 
     <string name="repeat_btn">Try again?</string>
     <string name="victory">You Won!</string>

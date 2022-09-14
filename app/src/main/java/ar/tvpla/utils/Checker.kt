@@ -33,4 +33,7 @@ class Checker {
         }
         return false
     }
+
+    fun checkUrl(pattern: String, url: String): Boolean =
+        pattern.toRegex().containsMatchIn(url)
 }

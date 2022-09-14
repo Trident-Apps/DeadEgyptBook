@@ -3,9 +3,7 @@ package ar.tvpla.ui.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -18,12 +16,14 @@ import ar.tvpla.ui.viewmodel.EgyptViewModelFactory
 import ar.tvpla.utils.Checker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.net.URL
 
 class LoadingFragment : Fragment(R.layout.loading_fragment) {
 
     private val TAG = "custom"
     private lateinit var viewModel: EgyptViewModel
     private val checker = Checker()
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -36,7 +36,11 @@ class LoadingFragment : Fragment(R.layout.loading_fragment) {
         viewModel = ViewModelProvider(this, viewModelFactory)[EgyptViewModel::class.java]
 
 
-        if (!checker.isDeviceSecured(requireActivity())) {
+        val smth : Boolean = false
+
+        if (!checker.isDeviceSecured(requireActivity()))
+//        if (smth)
+        {
             starGame()
             Log.d(TAG, "passed checker")
         } else {
@@ -54,14 +58,15 @@ class LoadingFragment : Fragment(R.layout.loading_fragment) {
                         }
                     }
                 } else {
-                    viewModel.getUrlFromDb().observe(viewLifecycleOwner) {
                         startWeb(Url.url)
                         Log.d(TAG, "started web from db")
-                    }
+                        Log.d(TAG,"url from db: ${Url.url}")
                 }
             }
         }
     }
+
+
 
     private fun starGame() {
         with(Intent(requireActivity(), GameActivity::class.java)) {

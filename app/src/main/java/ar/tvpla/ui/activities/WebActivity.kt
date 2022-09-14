@@ -16,6 +16,8 @@ class WebActivity : AppCompatActivity(R.layout.web_activity) {
         frag.arguments = bundle
         supportFragmentManager.beginTransaction().add(R.id.web_activity_fragment_container, frag)
             .commit()
-
     }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {}
 }

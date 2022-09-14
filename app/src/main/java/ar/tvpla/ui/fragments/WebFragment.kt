@@ -7,20 +7,17 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Message
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.webkit.*
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import ar.tvpla.R
 import ar.tvpla.databinding.WebFragmentBinding
 import ar.tvpla.ui.activities.GameActivity
 import ar.tvpla.ui.model.Url
 import ar.tvpla.ui.model.UrlDatabase
 import ar.tvpla.ui.viewmodel.EgyptViewModel
 import ar.tvpla.ui.viewmodel.EgyptViewModelFactory
+import ar.tvpla.utils.Checker
 
 class WebFragment : Fragment() {
 
@@ -29,7 +26,9 @@ class WebFragment : Fragment() {
     private var messageAb: ValueCallback<Array<Uri?>>? = null
     private var _binding: WebFragmentBinding? = null
     private val binding get() = _binding!!
-    private var isRedirected: Boolean = true
+    private var isRedirected: Boolean = false
+    private var pageisLoaded: Boolean = true
+    private val checker = Checker()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -92,7 +91,6 @@ class WebFragment : Fragment() {
                     @Deprecated("Deprecated in Java")
                     override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
                         view!!.loadUrl(url!!)
-                        isRedirected = true
                         return true
                     }
                 }
@@ -104,17 +102,17 @@ class WebFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    if (webView.canGoBack()) {
-                        webView.goBack()
-                    } else {
-                        isEnabled = false
-                    }
-                }
 
-            })
+        webView.canGoBack()
+        webView.setOnKeyListener(View.OnKeyListener { view, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.action == MotionEvent.ACTION_UP && webView.canGoBack()
+            ) {
+                webView.goBack()
+                return@OnKeyListener true
+            }
+            false
+        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -153,13 +151,6 @@ class WebFragment : Fragment() {
             super.onReceivedError(view, request, error)
         }
 
-        override fun shouldOverrideUrlLoading(
-            view: WebView?,
-            request: WebResourceRequest?
-        ): Boolean {
-            return super.shouldOverrideUrlLoading(view, request)
-        }
-
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             super.onPageStarted(view, url, favicon)
             isRedirected = false
@@ -193,7 +184,8 @@ class WebFragment : Fragment() {
     companion object {
         const val INTENT_TYPE = "image/*"
         const val CHOOSER_TITLE = "Image Chooser"
-        const val BASE_URL = "https://deadegyptbook.online/"
+        const val BASE_URL = "https://deadegypt.online/"
+        const val PATTERN = "(http|https):\\/\\/deadegyptbook.online\\/"
         const val RESULT_CODE = 1
     }
 }
