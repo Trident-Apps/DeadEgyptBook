@@ -1,10 +1,14 @@
 package ar.tvpla.utils
 
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+
 object Const {
 
     const val ONESIGNAL_ID = "95a3b3e4-1de3-42fc-b257-6a69afecb8d0"
     const val APPS_DEV_KEY = "Pd3MThiaa6rxbx86xeyFud"
-    const val BASE_URL = "https://deadegypt.online/deadegypt.php"
+    const val BASE_URL = "https://deadegyptbook.online/deadegypt.php"
 
     const val SECURE_GET_PARAMETR = "Ybn692vot4"
     const val SECURE_KEY = "02b55X9oCn"
@@ -20,4 +24,14 @@ object Const {
     const val ADGROUP_KEY = "6yVAuMj101"
     const val ORIG_COST_KEY = "szoeBDZGdg"
     const val AF_SITEID_KEY = "94j1zllsIT"
+}
+
+
+fun <T> LiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, observer: Observer<T>) {
+    observe(lifecycleOwner, object : Observer<T> {
+        override fun onChanged(t: T?) {
+            observer.onChanged(t)
+            removeObserver(this)
+        }
+    })
 }

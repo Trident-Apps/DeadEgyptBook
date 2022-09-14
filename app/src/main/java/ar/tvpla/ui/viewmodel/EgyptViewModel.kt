@@ -59,7 +59,12 @@ class EgyptViewModel(application: Application, private val db: UrlDatabase) :
 
     fun getUrlFromDb() = db.getDao().getUrl()
 
-    fun saveUrlToDb(url: Url) = viewModelScope.launch(Dispatchers.IO) {
+    fun saveUrlToDb(url: Url){
         db.getDao().insertUrl(url)
     }
+
+    fun getUrlSync(): Url?{
+        return db.getDao().getUrlSync()
+    }
+
 }

@@ -153,22 +153,29 @@ class WebFragment : Fragment() {
 
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             super.onPageStarted(view, url, favicon)
-            isRedirected = false
+           // isRedirected = false
         }
 
         override fun onPageFinished(view: WebView?, url: String?) {
             super.onPageFinished(view, url)
-            if (!isRedirected) {
+            if (viewModel.getUrlSync() == null && !url.toString().contains("deadegyptbook.online")) {
                 url?.let { url ->
                     if (url == BASE_URL) {
                         with(Intent(requireActivity(), GameActivity::class.java)) {
                             startActivity(this)
                         }
                     } else {
-                        viewModel.getUrlFromDb().observe(this@WebFragment) { entity ->
-                            if (entity == null) {
+                        when(viewModel.getUrlSync()){
+                            null -> {
+                                Log.d("custom", viewModel.getUrlFromDb().value.toString())
+                                Log.d("custom", "null")
                                 viewModel.saveUrlToDb(Url(url = url))
                             }
+                            else -> {
+                                Log.d("custom", "not null")
+
+                            }
+
                         }
                     }
                 }
@@ -184,7 +191,7 @@ class WebFragment : Fragment() {
     companion object {
         const val INTENT_TYPE = "image/*"
         const val CHOOSER_TITLE = "Image Chooser"
-        const val BASE_URL = "https://deadegypt.online/"
+        const val BASE_URL = "https://deadegyptbook.online/"
         const val PATTERN = "(http|https):\\/\\/deadegyptbook.online\\/"
         const val RESULT_CODE = 1
     }

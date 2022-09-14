@@ -14,6 +14,7 @@ import ar.tvpla.ui.model.UrlDatabase
 import ar.tvpla.ui.viewmodel.EgyptViewModel
 import ar.tvpla.ui.viewmodel.EgyptViewModelFactory
 import ar.tvpla.utils.Checker
+import ar.tvpla.utils.observeOnce
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.net.URL
@@ -44,7 +45,10 @@ class LoadingFragment : Fragment(R.layout.loading_fragment) {
             starGame()
             Log.d(TAG, "passed checker")
         } else {
-            viewModel.getUrlFromDb().observe(viewLifecycleOwner) { Url ->
+            viewModel.getUrlFromDb().observeOnce(viewLifecycleOwner) {
+                    Url ->
+                viewModel.getUrlFromDb().removeObservers(viewLifecycleOwner)
+
                 if (Url == null) {
                     Log.d(TAG, "passed DB check")
                     lifecycleScope.launch(Dispatchers.IO) {
@@ -62,6 +66,7 @@ class LoadingFragment : Fragment(R.layout.loading_fragment) {
                         Log.d(TAG, "started web from db")
                         Log.d(TAG,"url from db: ${Url.url}")
                 }
+
             }
         }
     }

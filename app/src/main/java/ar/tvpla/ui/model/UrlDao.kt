@@ -14,4 +14,8 @@ interface UrlDao {
 
     @Query("SELECT * FROM Url LIMIT 1")
     fun getUrl(): LiveData<Url>
+
+    @Query("SELECT * FROM Url LIMIT 1")
+    fun getUrlSync(): Url?
+
 }

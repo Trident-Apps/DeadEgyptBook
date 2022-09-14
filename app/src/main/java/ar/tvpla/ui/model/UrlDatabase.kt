@@ -21,6 +21,7 @@ abstract class UrlDatabase : RoomDatabase() {
 
         private fun buildDatabase(context: Context) =
             Room.databaseBuilder(context.applicationContext, UrlDatabase::class.java, "urlDatabase")
+                .allowMainThreadQueries()
                 .build()
     }
 }
