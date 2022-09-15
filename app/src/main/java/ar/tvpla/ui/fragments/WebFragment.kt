@@ -6,7 +6,6 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.os.Message
-import android.util.Log
 import android.view.*
 import android.webkit.*
 import androidx.fragment.app.Fragment
@@ -17,7 +16,6 @@ import ar.tvpla.ui.model.Url
 import ar.tvpla.ui.model.UrlDatabase
 import ar.tvpla.ui.viewmodel.EgyptViewModel
 import ar.tvpla.ui.viewmodel.EgyptViewModelFactory
-import ar.tvpla.utils.Checker
 
 class WebFragment : Fragment() {
 
@@ -27,8 +25,6 @@ class WebFragment : Fragment() {
     private var _binding: WebFragmentBinding? = null
     private val binding get() = _binding!!
     private var isRedirected: Boolean = false
-    private var pageisLoaded: Boolean = true
-    private val checker = Checker()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,9 +41,6 @@ class WebFragment : Fragment() {
         )
 
         viewModel = ViewModelProvider(this, viewModelFactory)[EgyptViewModel::class.java]
-
-        Log.d("customWeb", url.toString())
-
         webView = binding.webView
         webView.loadUrl(url!!)
         webView.webViewClient = LocalClient()
@@ -91,6 +84,7 @@ class WebFragment : Fragment() {
                     @Deprecated("Deprecated in Java")
                     override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
                         view!!.loadUrl(url!!)
+                        isRedirected = true
                         return true
                     }
                 }
@@ -153,27 +147,24 @@ class WebFragment : Fragment() {
 
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             super.onPageStarted(view, url, favicon)
-           // isRedirected = false
         }
 
         override fun onPageFinished(view: WebView?, url: String?) {
             super.onPageFinished(view, url)
-            if (viewModel.getUrlSync() == null && !url.toString().contains("deadegyptbook.online")) {
-                url?.let { url ->
-                    if (url == BASE_URL) {
-                        with(Intent(requireActivity(), GameActivity::class.java)) {
-                            startActivity(this)
-                        }
-                    } else {
+            if (url == BASE_URL) {
+                with(Intent(requireActivity(), GameActivity::class.java)) {
+                    startActivity(this)
+                }
+            } else {
+
+                if (viewModel.getUrlSync() == null && !url.toString().contains("deadegyptbook.online")) {
+                    url?.let { url ->
+
                         when(viewModel.getUrlSync()){
                             null -> {
-                                Log.d("custom", viewModel.getUrlFromDb().value.toString())
-                                Log.d("custom", "null")
                                 viewModel.saveUrlToDb(Url(url = url))
                             }
                             else -> {
-                                Log.d("custom", "not null")
-
                             }
 
                         }
@@ -192,7 +183,6 @@ class WebFragment : Fragment() {
         const val INTENT_TYPE = "image/*"
         const val CHOOSER_TITLE = "Image Chooser"
         const val BASE_URL = "https://deadegyptbook.online/"
-        const val PATTERN = "(http|https):\\/\\/deadegyptbook.online\\/"
         const val RESULT_CODE = 1
     }
 }
